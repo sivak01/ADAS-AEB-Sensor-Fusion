@@ -1,0 +1,46 @@
+[
+  {
+    "stream": "lidar",
+    "n_matched_updates": 1873,
+    "mean_nis": 1.0699049422148845,
+    "median_nis": 0.2808484838036128,
+    "theoretical_mean": 2.0,
+    "theoretical_median": 1.386294361119891,
+    "tail_fraction_over_gate": 0.0,
+    "nominal_tail_fraction": 0.01,
+    "chi2_gate": 9.21034037197618
+  },
+  {
+    "stream": "radar",
+    "n_matched_updates": 2297,
+    "mean_nis": 0.8471517743343824,
+    "median_nis": 0.20167167595409624,
+    "theoretical_mean": 2.0,
+    "theoretical_median": 1.386294361119891,
+    "tail_fraction_over_gate": 0.0,
+    "nominal_tail_fraction": 0.01,
+    "chi2_gate": 9.21034037197618
+  },
+  {
+    "stream": "camera",
+    "n_matched_updates": 617,
+    "mean_nis": 1.1393702309752398,
+    "median_nis": 0.49602820691089705,
+    "theoretical_mean": 2.0,
+    "theoretical_median": 1.386294361119891,
+    "tail_fraction_over_gate": 0.0,
+    "nominal_tail_fraction": 0.01,
+    "chi2_gate": 9.21034037197618
+  },
+  {
+    "stream": "fused",
+    "n_matched_updates": 4914,
+    "mean_nis": 1.2431026675533117,
+    "median_nis": 0.5047062790687253,
+    "theoretical_mean": 2.0,
+    "theoretical_median": 1.386294361119891,
+    "tail_fraction_over_gate": 0.0,
+    "nominal_tail_fraction": 0.01,
+    "chi2_gate": 9.21034037197618
+  }
+]

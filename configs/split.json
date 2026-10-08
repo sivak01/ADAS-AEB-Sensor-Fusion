@@ -1,0 +1,18 @@
+{
+  "_comment": "DEC-8, approved by Siva 2026-09-20 (reports/stepD0_report.md §5). FIXED once committed — never edit without a new DEC-8 entry in docs/decisions.md.",
+  "_reason": "scene-1100 holds all 5 AEB events in this dataset; assigned to eval so the final Definition-of-Done table has real AEB representation. Remaining 9 scenes round-robinned by GRADUAL+AEB danger-event count. Tune side has 0 AEB examples (4 GRADUAL) — a stated, unavoidable tradeoff of scene-level splitting with this few danger events.",
+  "tune": [
+    { "name": "scene-0103", "token": "fcbccedd61424f1b85dcbf8f897f9754" },
+    { "name": "scene-0061", "token": "cc8c0bf57f984915a77078b10eb33198" },
+    { "name": "scene-0655", "token": "bebf5f5b2a674631ab5c88fd1aa9e87a" },
+    { "name": "scene-0796", "token": "c5224b9b454b4ded9b5d2d2634bbda8a" },
+    { "name": "scene-1094", "token": "de7d80a1f5fb4c3e82ce8a4f213b450a" }
+  ],
+  "eval": [
+    { "name": "scene-1100", "token": "e233467e827140efa4b42d2b4c435855" },
+    { "name": "scene-1077", "token": "d25718445d89453381c659b9c8734939" },
+    { "name": "scene-0553", "token": "6f83169d067343658251f72e1dd17dbc" },
+    { "name": "scene-0757", "token": "2fc3753772e241f2ab2cd16a784cc680" },
+    { "name": "scene-0916", "token": "325cef682f064c55a255f2625c533b75" }
+  ]
+}

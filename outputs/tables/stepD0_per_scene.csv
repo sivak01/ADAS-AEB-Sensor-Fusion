@@ -1,0 +1,11 @@
+scene,n_keyframes,n_keyframes_in_path,n_gt_rows,NONE,GRADUAL,AEB,vel_invalid
+scene-0061,39,22,58,58,0,0,0
+scene-0103,40,12,12,8,4,0,0
+scene-0553,41,41,81,81,0,0,0
+scene-0655,41,3,3,3,0,0,0
+scene-0757,41,7,7,7,0,0,0
+scene-0796,40,7,7,7,0,0,0
+scene-0916,41,28,40,40,0,0,0
+scene-1077,41,34,34,33,1,0,0
+scene-1094,40,35,48,48,0,0,0
+scene-1100,40,23,25,19,1,5,0

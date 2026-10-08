@@ -1,0 +1,81 @@
+# torch is CPU-only (step04c decision, 2026-09-24 -- our GPU is a GeForce
+# GT 710 with 2GB VRAM, too old/weak to meaningfully accelerate inference).
+# Install it from the CPU wheel index BEFORE the rest of this file, e.g.:
+#   pip install torch==2.14.0+cpu --index-url https://download.pytorch.org/whl/cpu
+#   pip install -r requirements.txt
+# (a plain `pip install -r requirements.txt` alone will fail on the
+# "+cpu" local-version torch line against the default PyPI index.)
+#
+# opencv-python (not opencv-python-headless) is installed deliberately:
+# nuscenes-devkit's own metadata nominally requires opencv-python-headless,
+# but ultralytics requires the GUI-capable opencv-python -- both packages
+# provide the identical `cv2` import, and having BOTH installed at once
+# corrupts the shared native module (found and fixed 2026-09-24). Keep
+# only opencv-python; `pip check` will note the nominal mismatch, which is
+# safe to ignore (verified: full test suite + real dataset access both
+# pass with this exact combination).
+anyio==4.15.1
+cachetools==7.2.0
+certifi==2026.7.22
+charset-normalizer==3.5.1
+cloudpickle==3.1.2
+colorama==0.4.6
+contourpy==1.3.3
+cycler==0.12.1
+descartes==1.1.0
+filelock==3.32.3
+fire==0.7.1
+fonttools==4.65.0
+fsspec==2026.7.0
+h11==0.16.0
+httpcore==1.0.9
+httpx==0.28.1
+idna==3.20
+iniconfig==2.3.0
+Jinja2==3.1.6
+joblib==1.6.0
+kiwisolver==1.5.1
+lxml==6.1.3
+MarkupSafe==3.0.3
+matplotlib==3.9.2
+mpmath==1.3.0
+narwhals==2.26.0
+networkx==3.6.1
+numpy==1.26.4
+nuscenes-devkit==1.2.0
+nvidia-ml-py==13.610.43
+opencv-python==4.10.0.84
+packaging==26.3
+pandas==2.2.2
+parameterized==0.9.0
+pillow==12.3.0
+pluggy==1.6.0
+polars==1.44.2
+polars-runtime-32==1.44.2
+psutil==7.2.2
+pycocotools==2.0.11
+Pygments==2.21.0
+pyparsing==3.3.2
+pyquaternion==0.9.9
+pytest==9.1.1
+python-dateutil==2.9.0.post0
+pytz==2026.3.post1
+PyYAML==6.0.3
+requests==2.34.2
+scikit-learn==1.9.1
+scipy==1.13.1
+setuptools==78.1.0
+shapely==2.0.7
+six==1.17.0
+sympy==1.14.0
+termcolor==3.3.0
+threadpoolctl==3.7.0
+torch==2.14.0+cpu
+torchvision==0.29.0
+tqdm==4.70.1
+typing_extensions==4.16.0
+tzdata==2026.4
+ultralytics==8.4.161
+ultralytics-platform==0.1.62
+ultralytics-thop==2.1.6
+urllib3==2.8.0

@@ -1,0 +1,10 @@
+archive/
+archive.zip
+.claude/
+outputs/cache/
+outputs/models/
+outputs/figs/bev/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/

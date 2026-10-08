@@ -1,0 +1,45 @@
+﻿============================= test session starts =============================
+platform win32 -- Python 3.12.8, pytest-9.1.1, pluggy-1.6.0 -- F:\TTC Fusion\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: F:\TTC Fusion
+configfile: pytest.ini
+collecting ... collected 1 item
+
+tests/test_transforms.py::test_per_channel_pose_and_timestamp_independence ca9a282c RADAR_FRONT        vs LIDAR_TOP: dt=  16.23 ms, same_ego_pose_token=False, ego displacement between the two poses=148.42 mm
+ca9a282c RADAR_FRONT_LEFT   vs LIDAR_TOP: dt=   4.74 ms, same_ego_pose_token=False, ego displacement between the two poses=43.21 mm
+ca9a282c RADAR_FRONT_RIGHT  vs LIDAR_TOP: dt=   8.13 ms, same_ego_pose_token=False, ego displacement between the two poses=75.01 mm
+ca9a282c CAM_FRONT          vs LIDAR_TOP: dt=  35.49 ms, same_ego_pose_token=False, ego displacement between the two poses=328.01 mm
+39586f9d RADAR_FRONT        vs LIDAR_TOP: dt=  33.19 ms, same_ego_pose_token=False, ego displacement between the two poses=292.92 mm
+39586f9d RADAR_FRONT_LEFT   vs LIDAR_TOP: dt=  19.42 ms, same_ego_pose_token=False, ego displacement between the two poses=170.86 mm
+39586f9d RADAR_FRONT_RIGHT  vs LIDAR_TOP: dt=   6.51 ms, same_ego_pose_token=False, ego displacement between the two poses=57.31 mm
+39586f9d CAM_FRONT          vs LIDAR_TOP: dt=  35.39 ms, same_ego_pose_token=False, ego displacement between the two poses=312.33 mm
+356d81f3 RADAR_FRONT        vs LIDAR_TOP: dt=  21.91 ms, same_ego_pose_token=False, ego displacement between the two poses=184.03 mm
+356d81f3 RADAR_FRONT_LEFT   vs LIDAR_TOP: dt=  15.66 ms, same_ego_pose_token=False, ego displacement between the two poses=138.43 mm
+356d81f3 RADAR_FRONT_RIGHT  vs LIDAR_TOP: dt=  33.16 ms, same_ego_pose_token=False, ego displacement between the two poses=293.02 mm
+356d81f3 CAM_FRONT          vs LIDAR_TOP: dt=  35.59 ms, same_ego_pose_token=False, ego displacement between the two poses=314.50 mm
+e0845f53 RADAR_FRONT        vs LIDAR_TOP: dt=  22.24 ms, same_ego_pose_token=False, ego displacement between the two poses=182.91 mm
+e0845f53 RADAR_FRONT_LEFT   vs LIDAR_TOP: dt=   4.54 ms, same_ego_pose_token=False, ego displacement between the two poses=36.77 mm
+e0845f53 RADAR_FRONT_RIGHT  vs LIDAR_TOP: dt=  22.70 ms, same_ego_pose_token=False, ego displacement between the two poses=186.66 mm
+e0845f53 CAM_FRONT          vs LIDAR_TOP: dt=  34.89 ms, same_ego_pose_token=False, ego displacement between the two poses=287.01 mm
+c923fe08 RADAR_FRONT        vs LIDAR_TOP: dt=   1.65 ms, same_ego_pose_token=False, ego displacement between the two poses=13.67 mm
+c923fe08 RADAR_FRONT_LEFT   vs LIDAR_TOP: dt=   0.54 ms, same_ego_pose_token=False, ego displacement between the two poses=4.53 mm
+c923fe08 RADAR_FRONT_RIGHT  vs LIDAR_TOP: dt=   7.99 ms, same_ego_pose_token=False, ego displacement between the two poses=66.17 mm
+c923fe08 CAM_FRONT          vs LIDAR_TOP: dt=  35.34 ms, same_ego_pose_token=False, ego displacement between the two poses=292.65 mm
+f1e3d9d0 RADAR_FRONT        vs LIDAR_TOP: dt=   2.87 ms, same_ego_pose_token=False, ego displacement between the two poses=21.72 mm
+f1e3d9d0 RADAR_FRONT_LEFT   vs LIDAR_TOP: dt=  24.96 ms, same_ego_pose_token=False, ego displacement between the two poses=189.97 mm
+f1e3d9d0 RADAR_FRONT_RIGHT  vs LIDAR_TOP: dt=  21.94 ms, same_ego_pose_token=False, ego displacement between the two poses=166.95 mm
+f1e3d9d0 CAM_FRONT          vs LIDAR_TOP: dt=  40.14 ms, same_ego_pose_token=False, ego displacement between the two poses=303.68 mm
+4f545737 RADAR_FRONT        vs LIDAR_TOP: dt=  32.27 ms, same_ego_pose_token=False, ego displacement between the two poses=241.14 mm
+4f545737 RADAR_FRONT_LEFT   vs LIDAR_TOP: dt=  10.19 ms, same_ego_pose_token=False, ego displacement between the two poses=76.88 mm
+4f545737 RADAR_FRONT_RIGHT  vs LIDAR_TOP: dt=  12.90 ms, same_ego_pose_token=False, ego displacement between the two poses=97.35 mm
+4f545737 CAM_FRONT          vs LIDAR_TOP: dt=  35.87 ms, same_ego_pose_token=False, ego displacement between the two poses=271.29 mm
+7626dde2 RADAR_FRONT        vs LIDAR_TOP: dt=  12.28 ms, same_ego_pose_token=False, ego displacement between the two poses=83.98 mm
+7626dde2 RADAR_FRONT_LEFT   vs LIDAR_TOP: dt=  29.93 ms, same_ego_pose_token=False, ego displacement between the two poses=208.41 mm
+7626dde2 RADAR_FRONT_RIGHT  vs LIDAR_TOP: dt=  16.91 ms, same_ego_pose_token=False, ego displacement between the two poses=116.51 mm
+7626dde2 CAM_FRONT          vs LIDAR_TOP: dt=  36.05 ms, same_ego_pose_token=False, ego displacement between the two poses=261.23 mm
+be99ffc8 RADAR_FRONT        vs LIDAR_TOP: dt=  36.87 ms, same_ego_pose_token=False, ego displacement between the two poses=247.80 mm
+be99ffc8 RADAR_FRONT_LEFT   vs LIDAR_TOP: dt=  29.64 ms, same_ego_pose_token=False, ego displacement between the two poses=199.15 mm
+be99ffc8 RADAR_FRONT_RIGHT  vs LIDAR_TOP: dt=  27.76 ms, same_ego_pose_token=False, ego displacement between the two poses=193.05 mm
+be99ffc8 CAM_FRONT          vs LIDAR_TOP: dt=  35.37 ms, same_ego_pose_token=False, ego displacement between the two poses=237.70 mm
+9813c23a RADAR_FRONT        vs LIDAR_TOP: dt=   7.04 ms, same_ego_pose_token=False, ego displacement between the two poses=47.56 mm
+9813c23a RADAR_FRONT_LEFT   vs LIDAR_TOP: dt=  10.65 ms, same_ego_pose_token=False, ego displacement between the two poses=71.74 mm

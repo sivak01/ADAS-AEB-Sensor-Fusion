@@ -1,0 +1,25 @@
+﻿
+======================================================================
+1. Event arrivals over 1 second, per channel (raster)
+======================================================================
+saved outputs/figs/step01/raster_1s.png (scene-0061, first 1s)
+
+======================================================================
+2. Inter-arrival mean/std per channel
+======================================================================
+scene: scene-0061
+          channel  n_events  mean_interarrival_ms  std_interarrival_ms  implied_hz
+        LIDAR_TOP       382             50.261328             3.652041   19.896012
+      RADAR_FRONT       247             77.649317            12.631078   12.878413
+ RADAR_FRONT_LEFT       262             73.375793             6.769064   13.628473
+RADAR_FRONT_RIGHT       258             74.459708            11.221998   13.430082
+        CAM_FRONT       224             85.874439            27.458806   11.644909
+
+======================================================================
+3. Millisecond offsets between channels within one keyframe sample
+======================================================================
+  LIDAR_TOP            offset from LIDAR_TOP: +0.000 ms
+  RADAR_FRONT          offset from LIDAR_TOP: +16.227 ms
+  RADAR_FRONT_LEFT     offset from LIDAR_TOP: +4.735 ms
+  RADAR_FRONT_RIGHT    offset from LIDAR_TOP: -8.134 ms
+  CAM_FRONT            offset from LIDAR_TOP: -35.491 ms

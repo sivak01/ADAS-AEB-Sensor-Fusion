@@ -1,0 +1,6 @@
+﻿7220a2aa: roi_pts=19806 ground=5145 obstacle=14661 clusters=10 detections=10
+  in-path GT objects: 1, adapter detections: 10
+7f49d07a: roi_pts=18505 ground=5736 obstacle=12769 clusters=14 detections=14
+  in-path GT objects: 1, adapter detections: 14
+7ca3502c: roi_pts=18361 ground=7975 obstacle=10386 clusters=9 detections=9
+  in-path GT objects: 1, adapter detections: 9

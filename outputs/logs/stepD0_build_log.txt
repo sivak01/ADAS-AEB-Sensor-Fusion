@@ -1,0 +1,89 @@
+﻿
+======================================================================
+0. GT category scope (DEC-2) and instant/pose source (stepD0 §3.1)
+======================================================================
+GT_CATEGORIES (17): ['human.pedestrian.adult', 'human.pedestrian.child', 'human.pedestrian.construction_worker', 'human.pedestrian.personal_mobility', 'human.pedestrian.police_officer', 'human.pedestrian.stroller', 'human.pedestrian.wheelchair', 'vehicle.bicycle', 'vehicle.bus.bendy', 'vehicle.bus.rigid', 'vehicle.car', 'vehicle.construction', 'vehicle.emergency.ambulance', 'vehicle.emergency.police', 'vehicle.motorcycle', 'vehicle.trailer', 'vehicle.truck']
+Chosen: LIDAR_TOP keyframe sample_data's own ego_pose (position), EgoStateEstimator (velocity). LIDAR_TOP sample_data timestamp vs. sample.timestamp differs by 0.000 ms (example sample).
+
+======================================================================
+Building GT event table over all 10 scenes...
+======================================================================
+315 GT rows, 404 keyframe rows.
+Wrote outputs\gt_events.csv (315 rows)
+
+======================================================================
+1. Per-scene table
+======================================================================
+     scene  n_keyframes  n_keyframes_in_path  n_gt_rows  NONE  GRADUAL  AEB  vel_invalid
+scene-0061           39                   22         58    58        0    0            0
+scene-0103           40                   12         12     8        4    0            0
+scene-0553           41                   41         81    81        0    0            0
+scene-0655           41                    3          3     3        0    0            0
+scene-0757           41                    7          7     7        0    0            0
+scene-0796           40                    7          7     7        0    0            0
+scene-0916           41                   28         40    40        0    0            0
+scene-1077           41                   34         34    33        1    0            0
+scene-1094           40                   35         48    48        0    0            0
+scene-1100           40                   23         25    19        1    5            0
+
+======================================================================
+2. Overall totals
+======================================================================
+Total keyframes (all scenes): 404
+Keyframes with >=1 in-path GT object: 212 (52.5%); empty-corridor keyframes: 192
+Total GT rows (keyframe, in-path object pairs): 315
+Tier counts: {'NONE': 304, 'GRADUAL': 6, 'AEB': 5}
+Danger events (tier != NONE): 11 / 315 (3.49%)
+NOTE (stepD0 §4.2): expect this danger-event count to be small in nuScenes-mini — stated plainly, not treated as statistically solid on its own (what-not-to-do.md §7).
+
+======================================================================
+3. Histograms: GT TTC (finite) and closing speed
+======================================================================
+finite TTC: min=0.72 max=42.45 median=5.81
+closing speed: min=-5.01 max=21.52 median=0.20
+
+======================================================================
+4. Sample BEV figures (corridor + GT boxes by tier)
+======================================================================
+  saved outputs/figs/stepD0/bev_scene-1100.png
+  saved outputs/figs/stepD0/bev_scene-0103.png
+  saved outputs/figs/stepD0/bev_scene-1077.png
+
+======================================================================
+5. Split proposal (DEC-8) — PROPOSAL ONLY, not written to configs/split.json
+======================================================================
+NOTE: all 5 AEB events are in a single scene (scene-1100). A scene-level split cannot give both tune and eval real AEB representation -- assigning it to EVAL (the side the final Definition-of-Done table is built from, so the reported AEB tier isn't empty), and stating this plainly rather than letting a naive balanced-count split hide it.
+Proposed TUNE scenes:
+     scene  n_gt_rows  GRADUAL  AEB  danger
+scene-0103         12        4    0       4
+scene-0061         58        0    0       0
+scene-0655          3        0    0       0
+scene-0796          7        0    0       0
+scene-1094         48        0    0       0
+  tune totals: gt_rows=128, danger=4
+
+Proposed EVAL scenes:
+     scene  n_gt_rows  GRADUAL  AEB  danger
+scene-1100         25        1    5       6
+scene-1077         34        1    0       1
+scene-0553         81        0    0       0
+scene-0757          7        0    0       0
+scene-0916         40        0    0       0
+  eval totals: gt_rows=187, danger=7
+
+======================================================================
+6. Thin-denominator rule (MIN_COUNT_FOR_RATE)
+======================================================================
+MIN_COUNT_FOR_RATE = 10: any rate computed from fewer events is labelled 'indicative only'.
+  eval-side total GT rows: 187  -> OK
+  eval-side danger events (GRADUAL+AEB): 7  -> INDICATIVE ONLY (below MIN_COUNT_FOR_RATE)
+  eval-side AEB events: 5  -> INDICATIVE ONLY (below MIN_COUNT_FOR_RATE)
+  eval-side GRADUAL events: 2  -> INDICATIVE ONLY (below MIN_COUNT_FOR_RATE)
+
+3/4 proposed eval-side cells fall below MIN_COUNT_FOR_RATE=10.
+Per stepD0 §4.6: propose Wilson score intervals (step10) and/or a looser 'brake-worthy' threshold as an ADDITIONAL, clearly separate row alongside these counts -- never as a replacement.
+
+======================================================================
+Done
+======================================================================
+configs/split.json NOT written -- waiting for Siva's approval of the split proposal above.

@@ -1,0 +1,246 @@
+{
+  "doppler_OFF": {
+    "radar": {
+      "all": {
+        "n_scored": 79,
+        "correct_action_rate": {
+          "value": 0.9367088607594937,
+          "numerator": 74,
+          "denominator": 79,
+          "wilson_low": 0.8602511483722118,
+          "wilson_high": 0.9726651351199317,
+          "indicative_only": false
+        },
+        "false_brake_rate": {
+          "value": 0.04,
+          "numerator": 3,
+          "denominator": 75,
+          "wilson_low": 0.013696064260143935,
+          "wilson_high": 0.11112987082403747,
+          "indicative_only": false
+        },
+        "missed_brake_rate": {
+          "value": 0.5,
+          "numerator": 2,
+          "denominator": 4,
+          "wilson_low": 0.15003898915214947,
+          "wilson_high": 0.8499610108478506,
+          "indicative_only": true
+        },
+        "under_brake": 0,
+        "over_brake": 0
+      },
+      "obs_radar": {
+        "n_scored": 79,
+        "correct_action_rate": {
+          "value": 0.9493670886075949,
+          "numerator": 75,
+          "denominator": 79,
+          "wilson_low": 0.8769228272429488,
+          "wilson_high": 0.9801359572199815,
+          "indicative_only": false
+        },
+        "false_brake_rate": {
+          "value": 0.05128205128205128,
+          "numerator": 4,
+          "denominator": 78,
+          "wilson_low": 0.020121012473896145,
+          "wilson_high": 0.1245667654729449,
+          "indicative_only": false
+        },
+        "missed_brake_rate": {
+          "value": 0.0,
+          "numerator": 0,
+          "denominator": 1,
+          "wilson_low": 0.0,
+          "wilson_high": 0.7934506856227626,
+          "indicative_only": true
+        },
+        "under_brake": 0,
+        "over_brake": 0
+      }
+    },
+    "fused": {
+      "all": {
+        "n_scored": 79,
+        "correct_action_rate": {
+          "value": 0.8607594936708861,
+          "numerator": 68,
+          "denominator": 79,
+          "wilson_low": 0.7676266841134808,
+          "wilson_high": 0.9204345935539421,
+          "indicative_only": false
+        },
+        "false_brake_rate": {
+          "value": 0.13333333333333333,
+          "numerator": 10,
+          "denominator": 75,
+          "wilson_low": 0.07406584704043956,
+          "wilson_high": 0.2283316374469514,
+          "indicative_only": false
+        },
+        "missed_brake_rate": {
+          "value": 0.25,
+          "numerator": 1,
+          "denominator": 4,
+          "wilson_low": 0.04558726080970055,
+          "wilson_high": 0.6993581574175981,
+          "indicative_only": true
+        },
+        "under_brake": 0,
+        "over_brake": 0
+      },
+      "obs_any": {
+        "n_scored": 79,
+        "correct_action_rate": {
+          "value": 0.8607594936708861,
+          "numerator": 68,
+          "denominator": 79,
+          "wilson_low": 0.7676266841134808,
+          "wilson_high": 0.9204345935539421,
+          "indicative_only": false
+        },
+        "false_brake_rate": {
+          "value": 0.13333333333333333,
+          "numerator": 10,
+          "denominator": 75,
+          "wilson_low": 0.07406584704043956,
+          "wilson_high": 0.2283316374469514,
+          "indicative_only": false
+        },
+        "missed_brake_rate": {
+          "value": 0.25,
+          "numerator": 1,
+          "denominator": 4,
+          "wilson_low": 0.04558726080970055,
+          "wilson_high": 0.6993581574175981,
+          "indicative_only": true
+        },
+        "under_brake": 0,
+        "over_brake": 0
+      }
+    }
+  },
+  "doppler_ON": {
+    "radar": {
+      "all": {
+        "n_scored": 79,
+        "correct_action_rate": {
+          "value": 1.0,
+          "numerator": 79,
+          "denominator": 79,
+          "wilson_low": 0.9536287883460772,
+          "wilson_high": 1.0,
+          "indicative_only": false
+        },
+        "false_brake_rate": {
+          "value": 0.0,
+          "numerator": 0,
+          "denominator": 75,
+          "wilson_low": 3.469446951953614e-18,
+          "wilson_high": 0.04872384248280587,
+          "indicative_only": false
+        },
+        "missed_brake_rate": {
+          "value": 0.0,
+          "numerator": 0,
+          "denominator": 4,
+          "wilson_low": 0.0,
+          "wilson_high": 0.4898908364545973,
+          "indicative_only": true
+        },
+        "under_brake": 0,
+        "over_brake": 0
+      },
+      "obs_radar": {
+        "n_scored": 79,
+        "correct_action_rate": {
+          "value": 0.9620253164556962,
+          "numerator": 76,
+          "denominator": 79,
+          "wilson_low": 0.8941993723231529,
+          "wilson_high": 0.9870019131105641,
+          "indicative_only": false
+        },
+        "false_brake_rate": {
+          "value": 0.038461538461538464,
+          "numerator": 3,
+          "denominator": 78,
+          "wilson_low": 0.013165825413161053,
+          "wilson_high": 0.1070844604750183,
+          "indicative_only": false
+        },
+        "missed_brake_rate": {
+          "value": 0.0,
+          "numerator": 0,
+          "denominator": 1,
+          "wilson_low": 0.0,
+          "wilson_high": 0.7934506856227626,
+          "indicative_only": true
+        },
+        "under_brake": 0,
+        "over_brake": 0
+      }
+    },
+    "fused": {
+      "all": {
+        "n_scored": 79,
+        "correct_action_rate": {
+          "value": 0.8481012658227848,
+          "numerator": 67,
+          "denominator": 79,
+          "wilson_low": 0.7530014556229535,
+          "wilson_high": 0.9109173210736826,
+          "indicative_only": false
+        },
+        "false_brake_rate": {
+          "value": 0.13333333333333333,
+          "numerator": 10,
+          "denominator": 75,
+          "wilson_low": 0.07406584704043956,
+          "wilson_high": 0.2283316374469514,
+          "indicative_only": false
+        },
+        "missed_brake_rate": {
+          "value": 0.5,
+          "numerator": 2,
+          "denominator": 4,
+          "wilson_low": 0.15003898915214947,
+          "wilson_high": 0.8499610108478506,
+          "indicative_only": true
+        },
+        "under_brake": 0,
+        "over_brake": 0
+      },
+      "obs_any": {
+        "n_scored": 79,
+        "correct_action_rate": {
+          "value": 0.8481012658227848,
+          "numerator": 67,
+          "denominator": 79,
+          "wilson_low": 0.7530014556229535,
+          "wilson_high": 0.9109173210736826,
+          "indicative_only": false
+        },
+        "false_brake_rate": {
+          "value": 0.13333333333333333,
+          "numerator": 10,
+          "denominator": 75,
+          "wilson_low": 0.07406584704043956,
+          "wilson_high": 0.2283316374469514,
+          "indicative_only": false
+        },
+        "missed_brake_rate": {
+          "value": 0.5,
+          "numerator": 2,
+          "denominator": 4,
+          "wilson_low": 0.15003898915214947,
+          "wilson_high": 0.8499610108478506,
+          "indicative_only": true
+        },
+        "under_brake": 0,
+        "over_brake": 0
+      }
+    }
+  }
+}

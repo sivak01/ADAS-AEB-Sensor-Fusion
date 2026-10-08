@@ -1,0 +1,350 @@
+{
+  "DATAROOT": "F:\\TTC Fusion\\archive",
+  "NUSCENES_VERSION": "v1.0-mini",
+  "params": {
+    "ACTIVE_CHANNELS": {
+      "reason": "DEC-3, approved as proposed: forward corridor only (README_MASTER.md \u00a76) \u2014 a forward-TTC/AEB design has no use for side/rear sensors.",
+      "status": "ASSUMED",
+      "tunable_on": "never",
+      "value": [
+        "LIDAR_TOP",
+        "RADAR_FRONT",
+        "RADAR_FRONT_LEFT",
+        "RADAR_FRONT_RIGHT",
+        "CAM_FRONT"
+      ]
+    },
+    "CAMERA_DETECTOR_CONF_THRESH": {
+      "reason": "YOLOv8n confidence threshold. Ported from V1's own tuned value on this exact dataset/model.",
+      "status": "ASSUMED",
+      "tunable_on": "tune_split",
+      "value": 0.35
+    },
+    "CAMERA_DETECTOR_IOU_THRESH": {
+      "reason": "YOLOv8n NMS IoU threshold. Ported from V1's own tuned value.",
+      "status": "ASSUMED",
+      "tunable_on": "tune_split",
+      "value": 0.45
+    },
+    "CAMERA_DETECTOR_MODEL": {
+      "reason": "Ultralytics YOLO weight name -- ported from V1's own choice (V1's Step_2_3_YOLOv5.ipynb-family notebooks used Ultralytics YOLOv8n, CPU inference). Confirmed with Siva 2026-09-24: our own GPU (GeForce GT 710, 2GB VRAM) can't meaningfully accelerate a heavier model, so a lightweight nano model matters for processing ~2,400 CAM_FRONT frames on CPU.",
+      "status": "ASSUMED",
+      "tunable_on": "never",
+      "value": "yolov8n"
+    },
+    "CAMERA_PIXEL_SIGMA_U_PX": {
+      "reason": "Assumed pixel localization noise (horizontal, px) for a detector box's bottom-centre point -- step04c \u00a73.3's own suggested starting range (5-10px), used by _camera_R's sigma_lat formula.",
+      "status": "ASSUMED",
+      "tunable_on": "never",
+      "value": 7.0
+    },
+    "CAMERA_PIXEL_SIGMA_V_PX": {
+      "reason": "Assumed pixel localization noise (vertical, px) for a detector box's bottom edge -- same starting range as CAMERA_PIXEL_SIGMA_U_PX, used by _camera_R's sigma_long formula (which grows with range^2, since a fixed pixel error at the box's bottom edge maps to a growing ground-distance error as range increases and the ray becomes more grazing).",
+      "status": "ASSUMED",
+      "tunable_on": "never",
+      "value": 7.0
+    },
+    "CAMERA_RELEVANT_COCO_CLASSES": {
+      "reason": "COCO class ids kept from the detector's raw output (person/bicycle/car/motorcycle/bus/truck) -- ported from V1's own filter, added there after an earlier version wastefully reported benches/potted plants/traffic lights as detections. Recorded on Detection.cls but never used for gating in any run (DEC-2).",
+      "status": "ASSUMED",
+      "tunable_on": "never",
+      "value": {
+        "0": "person",
+        "1": "bicycle",
+        "2": "car",
+        "3": "motorcycle",
+        "5": "bus",
+        "7": "truck"
+      }
+    },
+    "CAMERA_TRUNCATED_BOTTOM_MARGIN_PX": {
+      "reason": "A box whose bottom edge sits within this many pixels of the image's own bottom edge is dropped, not converted to a Detection -- its ground-contact point is unknown (truncated by the image boundary, step04c \u00a73.1). Dropped boxes are counted in the report, never silently discarded.",
+      "status": "ASSUMED",
+      "tunable_on": "never",
+      "value": 2
+    },
+    "CANDIDATE_EXTRA_MARGIN_M": {
+      "reason": "Extra margin (m) added to the corridor when deciding which detections compete as track candidates, so an object about to enter the corridor is not missed.",
+      "status": "ASSUMED",
+      "tunable_on": "never",
+      "value": 1.5
+    },
+    "CHI2_GATE": {
+      "reason": "Chi-square quantile at 99% confidence, df=2 \u2014 computed from scipy, not typed, so it can never silently drift from the confidence level it claims. Replaces a fixed Euclidean gate per G7/lessons item A.4 (gate on the innovation covariance S = P_pred + R, including the incoming detection's own noise). The 0.99 confidence level itself is an assumption, not measured.",
+      "status": "ASSUMED",
+      "tunable_on": "never",
+      "value": 9.21034037197618
+    },
+    "CORRIDOR_HALF_WIDTH_M": {
+      "reason": "Half-width (m) of the ego vehicle's forward path corridor used for the forward-path relevance filter (step05).",
+      "status": "ASSUMED",
+      "tunable_on": "never",
+      "value": 1.2
+    },
+    "CORRIDOR_MAX_RANGE_M": {
+      "reason": "Maximum forward range (m) considered for path relevance \u2014 beyond this, TTC is not meaningfully actionable at typical urban/highway speeds.",
+      "status": "ASSUMED",
+      "tunable_on": "never",
+      "value": 60
+    },
+    "DEBOUNCE_N": {
+      "reason": "Number of consecutive real updates the danger condition must hold before an action tier fires (G16). Tune split only.",
+      "status": "ASSUMED",
+      "tunable_on": "tune_split",
+      "value": 3
+    },
+    "DISTANCE_DEFINITION": {
+      "reason": "DEC-1, confirmed by Siva at step05 Part A (option B, README_MASTER.md \u00a76): a partially-seen vehicle's visible centroid is biased ~1-2m from the GT box centre; nearest-surface is what TTC physically needs and stays consistent across sensors. Used identically by tracker output and ground truth (G9).",
+      "status": "ASSUMED",
+      "tunable_on": "never",
+      "value": "nearest_surface_to_ego"
+    },
+    "EGO_POSE_STD_M": {
+      "reason": "nuScenes ego_pose comes from a fused localization stack (GPS/IMU/wheel odometry), far more accurate than any tracked sensor \u2014 literature-typical ~5cm automotive localization std, not independently measured here.",
+      "status": "ASSUMED",
+      "tunable_on": "never",
+      "value": 0.05
+    },
+    "ENTERING_HORIZON_S": {
+      "reason": "Time horizon (s) used to admit an object that is clearly about to enter the corridor even though it is not in it yet.",
+      "status": "ASSUMED",
+      "tunable_on": "never",
+      "value": 1.5
+    },
+    "EVICTION_GAP_S": {
+      "reason": "~3-4 inter-arrival gaps of the slowest active sensor; identical in all four runs (G11). Deliberately NOT v2's MAX_MISSED_SECONDS=1.5 \u2014 this project's tracks are short-lived by design (2-4 updates), so lessons-from-v1-v2.md item C.1 says the old eviction tradeoff does not carry over unexamined.",
+      "status": "ASSUMED",
+      "tunable_on": "never",
+      "value": 0.3
+    },
+    "GROUND_RANSAC_DIST_THRESH_M": {
+      "reason": "Max distance (m) from the fitted ground plane to count as a ground point. Ported from V1's own tuned RANSAC_DISTANCE_THRESHOLD, measured on this exact dataset (Step_2_1_LiDAR_Processing.ipynb) \u2014 a real starting point, not a fresh guess, though re-validated on this project's own real-data check (step04a) since the pipeline around it has changed substantially.",
+      "status": "ASSUMED",
+      "tunable_on": "tune_split",
+      "value": 0.2
+    },
+    "GROUND_RANSAC_ITERS": {
+      "reason": "RANSAC iterations to search for the best-fit ground plane. Ported from V1's own tuned value on this exact dataset.",
+      "status": "ASSUMED",
+      "tunable_on": "never",
+      "value": 100
+    },
+    "GROUND_RANSAC_N_POINTS": {
+      "reason": "Points sampled per RANSAC iteration (the minimum to define a plane) \u2014 fixed by geometry, not really a free parameter; matches V1's own value.",
+      "status": "ASSUMED",
+      "tunable_on": "never",
+      "value": 3
+    },
+    "GROUND_Z_EGO": {
+      "reason": "Flat-ground-plane assumption (ego-frame z, metres) for camera ground-plane back-projection (DEC-6, confirmed 2026-09-24 -- no V1/V2 precedent exists for this method, built fresh). Diagnosed against real GT box bottoms on the tune split (step04c \u00a73.4); a genuine limitation, not a hidden one -- fails on slopes/pitching, and back-projection range error grows roughly with range^2.",
+      "status": "ASSUMED",
+      "tunable_on": "tune_split",
+      "value": 0.0
+    },
+    "GT_CATEGORIES": {
+      "reason": "DEC-2: GT events scoped to vehicle.* + human.pedestrian.* (collision-relevant categories; movable_object.*/static_object.* are typically static clutter). vehicle.trailer is INCLUDED under the plain prefix rule \u2014 no scoped exclusion was requested, and a towed trailer is part of a large vehicle's collision envelope; excluding it would need a 'has a cab' check this project doesn't build. Class is recorded on every row but never gates candidate selection in any of the four comparison runs (symmetric \u2014 what-not-to-do.md \u00a76).",
+      "status": "ASSUMED",
+      "tunable_on": "never",
+      "value": [
+        "human.pedestrian.adult",
+        "human.pedestrian.child",
+        "human.pedestrian.construction_worker",
+        "human.pedestrian.personal_mobility",
+        "human.pedestrian.police_officer",
+        "human.pedestrian.stroller",
+        "human.pedestrian.wheelchair",
+        "vehicle.bicycle",
+        "vehicle.bus.bendy",
+        "vehicle.bus.rigid",
+        "vehicle.car",
+        "vehicle.construction",
+        "vehicle.emergency.ambulance",
+        "vehicle.emergency.police",
+        "vehicle.motorcycle",
+        "vehicle.trailer",
+        "vehicle.truck"
+      ]
+    },
+    "LIDAR_CLUSTER_EPS_M": {
+      "reason": "DBSCAN eps (m) for LiDAR obstacle clustering. Ported from V1's own tuned value on this exact dataset (Step_2_1_LiDAR_Processing.ipynb) \u2014 re-validated on this project's own real-data check (step04a) since this project reads native-rate sweeps, not the same point density V1 processed.",
+      "status": "ASSUMED",
+      "tunable_on": "tune_split",
+      "value": 0.7
+    },
+    "LIDAR_CLUSTER_MIN_SAMPLES": {
+      "reason": "DBSCAN min_samples for LiDAR obstacle clustering. Ported from V1's own tuned value; re-validated on this project's own real-data check (step04a) for the same reason as LIDAR_CLUSTER_EPS_M.",
+      "status": "ASSUMED",
+      "tunable_on": "tune_split",
+      "value": 10
+    },
+    "LIDAR_GROUND_FIT_RANGE_M": {
+      "reason": "RANSAC fits the ground plane using only NEAR-FIELD points within this range (m) \u2014 avoids far-range points (more likely off-plane due to road slope, or already low point-density) contaminating the fit. The fitted plane is then applied to the whole ROI, not just this near-field subset (step04a \u00a73 step 4).",
+      "status": "ASSUMED",
+      "tunable_on": "never",
+      "value": 20.0
+    },
+    "LIDAR_GROUND_FIT_Z_MAX_M": {
+      "reason": "RANSAC fits the ground plane using only LOW points below this ego-frame z (m) \u2014 well below typical vehicle roofs, generous enough for genuine ground bumps/curbs, meant to bias the fitting sample toward likely-ground points.",
+      "status": "ASSUMED",
+      "tunable_on": "never",
+      "value": 0.5
+    },
+    "LIDAR_MIN_RANGE_M": {
+      "reason": "Points closer than this range (m) to the LiDAR are excluded from the ROI entirely -- excludes ego-vehicle self-returns (the sensor hitting its own roof/mount/roof-rack). Found necessary on real data at step04a: a keyframe's adapter output included a 9805-point cluster at x=0-1.4m, z=1.4-1.8m -- exactly the LiDAR's own mount height at point-blank range, not a real external object. 3.0m comfortably exceeds a typical passenger vehicle's own body extent from a roof-mounted LiDAR.",
+      "status": "ASSUMED",
+      "tunable_on": "never",
+      "value": 3.0
+    },
+    "LIDAR_ROI_SLACK_M": {
+      "reason": "Extra margin (m) added beyond the candidate gate's own range/half-width for the LiDAR adapter's coarse ROI crop \u2014 compute-only, not a decision filter (step05's candidate gate is the real decision boundary).",
+      "status": "ASSUMED",
+      "tunable_on": "never",
+      "value": 5.0
+    },
+    "LIDAR_ROI_Z_MAX_M": {
+      "reason": "Ego-frame z upper bound (m) for the LiDAR adapter's coarse ROI crop \u2014 see LIDAR_ROI_Z_MIN_M.",
+      "status": "ASSUMED",
+      "tunable_on": "never",
+      "value": 3.0
+    },
+    "LIDAR_ROI_Z_MIN_M": {
+      "reason": "Ego-frame z lower bound (m) for the LiDAR adapter's coarse ROI crop \u2014 a generous band meant only to drop obviously-irrelevant points (sky returns, deep underpasses) before ground removal, not to shape the final detection.",
+      "status": "ASSUMED",
+      "tunable_on": "never",
+      "value": -3.0
+    },
+    "MAX_ASSOC_DIST_M": {
+      "reason": "Distance threshold (m) for Hungarian-assigning a system track to a GT object when diagnosing which GT object a false brake was about (step09).",
+      "status": "ASSUMED",
+      "tunable_on": "never",
+      "value": 2.0
+    },
+    "MAX_MEMORY_UPDATES": {
+      "reason": "DEC-5: sensors_in_estimate (step06) is the sensors of only the last MAX_MEMORY_UPDATES real updates -- a bounded recent-window set, not a lifetime-growing one. v2's CentralTracker tracked sensors_seen as a lifetime set; deliberately not carried over here (G11 \u2014 'which sensors contributed to the CURRENT estimate', not a lifetime property).",
+      "status": "ASSUMED",
+      "tunable_on": "never",
+      "value": 4
+    },
+    "MAX_VEL_STD_MPS": {
+      "reason": "Velocity-trust limit (m/s) \u2014 a track's velocity estimate is only trusted below this std. Measured 2026-09-24 (scripts/tune.py, step11 \u00a74.6): the KF's own reported velocity std (worse of the two axis stds, matching is_velocity_eligible's own convention) across every real update of every track with >=MIN_UPDATES_FOR_TTC updates, pooled across all 4 streams on the tune split at SIGMA_A=0.5 (n=47,336). The 75th percentile is used -- trusts the majority of reasonably-mature tracks while excluding the clearly still-noisy tail (freshly-spawned/sparsely-updated tracks); this same threshold was also used to clean up the MIN_TRUSTED_SPEED_MPS/MIN_CLOSING_SPEED_MPS measurement (see their own reason fields). Labelled ASSUMED (a percentile choice from the KF's own reported uncertainty), not MEASURED against an independent ground truth.",
+      "status": "ASSUMED",
+      "tunable_on": "tune_split",
+      "value": 3.9
+    },
+    "MIN_CLOSING_SPEED_MPS": {
+      "reason": "Closing speed <= this returns TTC = inf rather than an astronomically large but meaningless finite value (G8). Distinct from MIN_TRUSTED_SPEED_MPS above \u2014 this gates the RADIAL-to-ego component, not raw speed magnitude. Measured 2026-09-24 alongside MIN_TRUSTED_SPEED_MPS, with one further G13 fix: the full closing-speed formula ((ego_v - obj_v)*los/dist) is NOT pure jitter for a stationary object -- ego's own real motion relative to a fixed point is a genuine geometric signal (often several m/s), not noise, and ego's own velocity is precisely known (EGO_POSE_STD_M ~5cm), not itself jittery. The actual noise contribution is only the object's own estimated velocity (exactly 0 for a truly stationary object) projected onto the line-of-sight -- using the full formula instead gave a contaminated median of ~5 m/s dominated by real ego motion, not sensor noise. Same 80th-percentile-at-the-natural-break reasoning as MIN_TRUSTED_SPEED_MPS applies to the corrected sample.",
+      "status": "ASSUMED",
+      "tunable_on": "tune_split",
+      "value": 1.79
+    },
+    "MIN_COUNT_FOR_RATE": {
+      "reason": "Below this many events in a denominator, a reported rate is labelled 'indicative only' rather than a solid statistic (what-not-to-do.md \u00a77).",
+      "status": "ASSUMED",
+      "tunable_on": "never",
+      "value": 10
+    },
+    "MIN_LIDAR_PTS": {
+      "reason": "A GT object with fewer than this many LiDAR points inside its box is treated as outside LiDAR's effective view, not a tracker failure (what-not-to-do.md \u00a76).",
+      "status": "ASSUMED",
+      "tunable_on": "never",
+      "value": 5
+    },
+    "MIN_RADAR_PTS": {
+      "reason": "Same purpose as MIN_LIDAR_PTS, for radar's num_radar_pts.",
+      "status": "ASSUMED",
+      "tunable_on": "never",
+      "value": 1
+    },
+    "MIN_TRUSTED_SPEED_MPS": {
+      "reason": "Below this raw speed, a track's motion is treated as sensor/clustering jitter on a stationary object rather than real motion (G8). Measured 2026-09-24 (scripts/tune.py, step11 \u00a74.6): matched real, stationary tune-split GT objects (box_velocity < 0.5 m/s) to the tracker's own KF speed estimate at each keyframe, pooled across all 4 streams at the chosen SIGMA_A=0.5 (n=38, after two G13 fixes below). Two real bugs found and fixed in the measurement itself before trusting it: (1) the raw sample was contaminated by freshly-spawned tracks at exactly MIN_UPDATES_FOR_TTC updates, where measurement noise over a tiny native-rate dt implies enormous meaningless velocities -- fixed by restricting to samples whose own KF vel_std already clears MAX_VEL_STD_MPS (exactly the population the real eligibility gate lets through); (2) even after that fix, a small residual tail remained from this diagnostic's own crude nearest-position GT-to-track matching occasionally picking up an unrelated, genuinely-moving nearby track in a crowded scene (confirmed directly: a track with 7 real updates and a modest vel_std still reporting ~10 m/s next to a parked car) -- fixed with a tighter (0.75m) and unambiguous (next-nearest track >=1m farther) association. The resulting cleaned sample is visibly bimodal (a tight cluster <2 m/s, a gap, then a handful of still-residual outliers) -- the 80th percentile, sitting at that natural break, is used rather than a 95th percentile that a sample this size (n=38) cannot support robustly. Labelled ASSUMED, not MEASURED, given the small N and the residual association uncertainty stated above.",
+      "status": "ASSUMED",
+      "tunable_on": "tune_split",
+      "value": 1.99
+    },
+    "MIN_UPDATES_FOR_TTC": {
+      "reason": "Fixed by physics, not tunable: a rate (velocity) cannot be computed from fewer than 2 temporally-linked detections of the same object, regardless of sensor or algorithm (CLAUDE.md 'Does require').",
+      "status": "ASSUMED",
+      "tunable_on": "never",
+      "value": 2
+    },
+    "MIN_VISIBILITY_LEVEL": {
+      "reason": "Minimum nuScenes visibility level (of 4: 0-40%, 40-60%, 60-80%, 80-100%) for a GT object to count as observable at all, camera-side.",
+      "status": "ASSUMED",
+      "tunable_on": "never",
+      "value": 2
+    },
+    "NEAREST_SURFACE_RADIUS_M": {
+      "reason": "DEC-1 nearest-surface reference point: a cluster's reference point is the mean of its points within this radius (m) of the single nearest point by range \u2014 not the bare minimum point alone (too noisy). Starting value proposed directly by step04a_lidar_adapter.md \u00a73. Shared across sensors (no per-sensor prefix) \u2014 DEC-1 is explicitly a project-wide, cross-sensor rule (README_MASTER.md \u00a76: 'stays consistent across sensors'), reused as-is by the radar adapter (step04b) rather than given its own value.",
+      "status": "ASSUMED",
+      "tunable_on": "never",
+      "value": 0.3
+    },
+    "RADAR_CLUSTER_EPS_M": {
+      "reason": "DBSCAN eps (m) for radar clustering, in xy only (z ignored -- unreliable, step04b \u00a73). Ported from V1/V2's own tuned value on this exact dataset (V1 Step_3_2_Radar_Fusion.ipynb; V2 config.py RADAR_CLUSTER_EPS_M) -- 2x LiDAR's eps (0.7m) since radar returns are sparser and spread wider per real object.",
+      "status": "ASSUMED",
+      "tunable_on": "tune_split",
+      "value": 1.5
+    },
+    "RADAR_CLUSTER_MIN_SAMPLES": {
+      "reason": "DBSCAN min_samples for radar clustering. Ported from V1/V2's own tuned value: radar rarely returns more than 1-2 points per real object per scan, so requiring min_samples>1 (as LiDAR does, =10) would silently drop most real single-blip detections. NOTE: with min_samples=1, sklearn's DBSCAN never labels any point as noise (label=-1) -- every radar point that survives the devkit's own point filter becomes part of SOME cluster/detection, ghost returns included (step04b decision, 2026-09-23: ghost-return suppression is the downstream pipeline's job, not this adapter's -- see docs/decisions.md).",
+      "status": "ASSUMED",
+      "tunable_on": "tune_split",
+      "value": 1
+    },
+    "SENSOR_R_CAMERA": {
+      "reason": "Camera R is range-dependent (ground-plane back-projection error grows with range^2), not a fixed (sigma_long, sigma_lat) pair like LIDAR/RADAR's own SENSOR_R params above -- there is deliberately no static value here. The function itself (adapters/camera.py's _camera_R) is defined at step04c, parametrized by CAMERA_PIXEL_SIGMA_U_PX/CAMERA_PIXEL_SIGMA_V_PX below plus each detection's own range and the event's own focal length/camera height.",
+      "status": "PLACEHOLDER",
+      "tunable_on": "never",
+      "value": null
+    },
+    "SENSOR_R_LIDAR": {
+      "reason": "Literature-typical LiDAR range accuracy. A direct measurement (matched-track residual vs. sample_annotation GT) was attempted for this exact sensor in the predecessor project and found untrustworthy: LiDAR's own track fragmentation there (4.1x vs. real object count) meant only ~86% of matched points were real inliers, well below the >97% a robust estimator needs, so the resulting number (~2.0m) was physically implausible for LiDAR (lessons-from-v1-v2.md item A.10 / 10). Re-measurement here is only justified once this project independently confirms low fragmentation under its own short-memory tracker (step06).",
+      "status": "ASSUMED",
+      "tunable_on": "never",
+      "value": {
+        "sigma_lat_m": 0.3,
+        "sigma_long_m": 0.3
+      }
+    },
+    "SENSOR_R_RADAR": {
+      "reason": "Literature-typical radar accuracy (good range resolution, poor angular/lateral resolution). Same non-measurability rationale as SENSOR_R_LIDAR above.",
+      "status": "ASSUMED",
+      "tunable_on": "never",
+      "value": {
+        "sigma_lat_m": 1.5,
+        "sigma_long_m": 0.5
+      }
+    },
+    "SIGMA_A": {
+      "reason": "Shared object process-noise std (m/s^2). Coincides numerically with v2's own PROCESS_NOISE_SIGMA_A default range, but NOT inherited from it \u2014 lessons-from-v1-v2.md item C.1 says this tradeoff genuinely changes once track lifetime drops to 2-4 updates. Selected 2026-09-24 by a log-spaced grid sweep ({0.5,1,2,4,8}) across all four streams on the tune split, scored by DEC-7's own pre-declared criterion (mean correct_action_rate across lidar/radar/camera/fused, missed_brake_rate as tie-breaker) -- 0.5 won outright (mean_correct=0.9430 vs. 0.9335-0.9399 for the other four values), no tie-breaker needed. The single-sensor streams' own correct_action_rate was essentially flat across the whole grid (0.9494 for lidar/radar/camera at every value) -- SIGMA_A's effect is concentrated in the fused stream, which varied 0.886-0.924 across the grid; full sweep logged in outputs/tuning_log.csv. Labelled ASSUMED, not MEASURED (this project's own MEASURED status is reserved for direct empirical measurement like sensor R, not a grid-search selection).",
+      "status": "ASSUMED",
+      "tunable_on": "tune_split",
+      "value": 0.5
+    },
+    "SIGMA_A_EGO": {
+      "reason": "Ego vehicle's own process-noise std (m/s^2) for the shared KF used to derive ego velocity from ego_pose (G5/G6). Ego motion is smoother/less erratic than a tracked object's, hence lower than SIGMA_A, but not yet measured.",
+      "status": "ASSUMED",
+      "tunable_on": "never",
+      "value": 1.0
+    },
+    "TTC_AEB_S": {
+      "reason": "TTC at or below this triggers the AEB action tier. Tune split only.",
+      "status": "ASSUMED",
+      "tunable_on": "tune_split",
+      "value": 1.2
+    },
+    "TTC_GRADUAL_S": {
+      "reason": "TTC at or below this triggers the GRADUAL action tier. Tune split only.",
+      "status": "ASSUMED",
+      "tunable_on": "tune_split",
+      "value": 2.5
+    },
+    "V0_STD_MPS": {
+      "reason": "Initial velocity std (m/s) used to initialise a new track's KF covariance \u2014 deliberately large/uninformative so the first real update dominates.",
+      "status": "ASSUMED",
+      "tunable_on": "never",
+      "value": 10.0
+    }
+  },
+  "sha256": "58709abded7796ead9a7b086f82484e02ef7527aae165a6e1fae7e6fe96926c5"
+}

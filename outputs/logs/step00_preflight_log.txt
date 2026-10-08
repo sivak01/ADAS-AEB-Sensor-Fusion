@@ -1,0 +1,144 @@
+﻿
+======================================================================
+1. DATAROOT discovery
+======================================================================
+BASE_DIR       : F:\TTC Fusion
+TTCF_DATAROOT  : (not set)
+Resolved DATAROOT : F:\TTC Fusion\archive
+Resolved VERSION  : v1.0-mini
+
+Top-level entries under DATAROOT:
+  .v1.0-mini.txt
+  maps
+  samples
+  sweeps
+  v1.0-mini
+
+======================================================================
+2. Load NuScenes and report table sizes
+======================================================================
+======
+Loading NuScenes tables for version v1.0-mini...
+23 category,
+8 attribute,
+4 visibility,
+911 instance,
+12 sensor,
+120 calibrated_sensor,
+31206 ego_pose,
+8 log,
+10 scene,
+404 sample,
+31206 sample_data,
+18538 sample_annotation,
+4 map,
+Done loading in 0.252 seconds.
+======
+Reverse indexing ...
+Done reverse indexing in 0.0 seconds.
+======
+
+scenes       : 10 (expect 10 for v1.0-mini)
+samples      : 404
+sample_data  : 31206
+
+======================================================================
+3. Sweeps check (critical, G3)
+======================================================================
+channel                    keyframes     sweeps
+CAM_BACK                         404       1911
+CAM_BACK_LEFT                    404       1923
+CAM_BACK_RIGHT                   404       1938
+CAM_FRONT                        404       1938
+CAM_FRONT_LEFT                   404       1940
+CAM_FRONT_RIGHT                  404       1934
+LIDAR_TOP                        404       3531
+RADAR_BACK_LEFT                  404       2230
+RADAR_BACK_RIGHT                 404       2231
+RADAR_FRONT                      404       2231
+RADAR_FRONT_LEFT                 404       2282
+RADAR_FRONT_RIGHT                404       2269
+
+Random-sample file-existence check (20 sweep records per channel):
+  CAM_BACK                  checked 20 -> OK
+  CAM_BACK_LEFT             checked 20 -> OK
+  CAM_BACK_RIGHT            checked 20 -> OK
+  CAM_FRONT                 checked 20 -> OK
+  CAM_FRONT_LEFT            checked 20 -> OK
+  CAM_FRONT_RIGHT           checked 20 -> OK
+  LIDAR_TOP                 checked 20 -> OK
+  RADAR_BACK_LEFT           checked 20 -> OK
+  RADAR_BACK_RIGHT          checked 20 -> OK
+  RADAR_FRONT               checked 20 -> OK
+  RADAR_FRONT_LEFT          checked 20 -> OK
+  RADAR_FRONT_RIGHT         checked 20 -> OK
+
+======================================================================
+4. Devkit version and API signatures
+======================================================================
+nuscenes-devkit version: 1.2.0
+  NuScenes.box_velocity(self, sample_annotation_token: str, max_time_diff: float = 1.5) -> numpy.ndarray
+  NuScenes.get_sample_data_path(self, sample_data_token: str) -> str
+  geometry_utils.transform_matrix(translation: numpy.ndarray = array([0, 0, 0]), rotation: pyquaternion.quaternion.Quaternion = Quaternion(1.0, 0.0, 0.0, 0.0), inverse: bool = False) -> numpy.ndarray
+  LidarPointCloud.from_file(file_name: str) -> 'LidarPointCloud'
+  RadarPointCloud.from_file(file_name: str, invalid_states: List[int] = None, dynprop_states: List[int] = None, ambig_states: List[int] = None) -> 'RadarPointCloud'
+
+list_categories():
+Category stats for split v1.0-mini:
+human.pedestrian.adult      n= 4765, width= 0.68±0.11, len= 0.73±0.17, height= 1.76±0.12, lw_aspect= 1.08±0.23
+human.pedestrian.child      n=   46, width= 0.46±0.08, len= 0.45±0.09, height= 1.37±0.06, lw_aspect= 0.97±0.05
+human.pedestrian.constructi n=  193, width= 0.69±0.07, len= 0.74±0.12, height= 1.78±0.05, lw_aspect= 1.07±0.16
+human.pedestrian.personal_m n=   25, width= 0.83±0.00, len= 1.28±0.00, height= 1.87±0.00, lw_aspect= 1.55±0.00
+human.pedestrian.police_off n=   11, width= 0.59±0.00, len= 0.47±0.00, height= 1.81±0.00, lw_aspect= 0.80±0.00
+movable_object.barrier      n= 2323, width= 2.32±0.49, len= 0.61±0.11, height= 1.06±0.10, lw_aspect= 0.28±0.09
+movable_object.debris       n=   13, width= 0.43±0.00, len= 1.43±0.00, height= 0.46±0.00, lw_aspect= 3.35±0.00
+movable_object.pushable_pul n=   82, width= 0.51±0.06, len= 0.79±0.10, height= 1.04±0.20, lw_aspect= 1.55±0.18
+movable_object.trafficcone  n= 1378, width= 0.47±0.14, len= 0.45±0.07, height= 0.78±0.13, lw_aspect= 0.99±0.12
+static_object.bicycle_rack  n=   54, width= 2.67±1.46, len=10.09±6.19, height= 1.40±0.00, lw_aspect= 5.97±4.02
+vehicle.bicycle             n=  243, width= 0.64±0.12, len= 1.82±0.14, height= 1.39±0.34, lw_aspect= 2.94±0.41
+vehicle.bus.bendy           n=   57, width= 2.83±0.09, len= 9.23±0.33, height= 3.32±0.07, lw_aspect= 3.27±0.22
+vehicle.bus.rigid           n=  353, width= 2.95±0.26, len=11.46±1.79, height= 3.80±0.62, lw_aspect= 3.88±0.57
+vehicle.car                 n= 7619, width= 1.92±0.16, len= 4.62±0.36, height= 1.69±0.21, lw_aspect= 2.41±0.18
+vehicle.construction        n=  196, width= 2.58±0.35, len= 5.57±1.57, height= 2.38±0.33, lw_aspect= 2.18±0.62
+vehicle.motorcycle          n=  471, width= 0.68±0.21, len= 1.95±0.38, height= 1.47±0.20, lw_aspect= 3.00±0.62
+vehicle.trailer             n=   60, width= 2.28±0.08, len=10.14±5.69, height= 3.71±0.27, lw_aspect= 4.37±2.41
+vehicle.truck               n=  649, width= 2.35±0.34, len= 6.50±1.56, height= 2.62±0.68, lw_aspect= 2.75±0.37
+
+list_attributes():
+cycle.with_rider: 305
+cycle.without_rider: 434
+pedestrian.moving: 3875
+pedestrian.sitting_lying_down: 111
+pedestrian.standing: 1029
+vehicle.moving: 2715
+vehicle.parked: 4674
+vehicle.stopped: 1545
+
+======================================================================
+5. Native rate per channel (median timestamp gap)
+======================================================================
+channel                     median_gap_ms  approx_hz
+CAM_BACK                           100.00      10.00
+CAM_BACK_LEFT                      100.00      10.00
+CAM_BACK_RIGHT                     100.00      10.00
+CAM_FRONT                          100.00      10.00
+CAM_FRONT_LEFT                     100.00      10.00
+CAM_FRONT_RIGHT                    100.00      10.00
+LIDAR_TOP                           49.79      20.09
+RADAR_BACK_LEFT                     74.98      13.34
+RADAR_BACK_RIGHT                    74.58      13.41
+RADAR_FRONT                         75.02      13.33
+RADAR_FRONT_LEFT                    74.75      13.38
+RADAR_FRONT_RIGHT                   74.81      13.37
+
+======================================================================
+6. Environment
+======================================================================
+Python version: 3.12.8 (F:\TTC Fusion\.venv\Scripts\python.exe)
+torch: not installed (expected — README_MASTER.md says ask before installing)
+GPU: nvidia-smi present, a GPU may be available (not required by this project)
+
+======================================================================
+Preflight complete
+======================================================================
+No STOP conditions triggered. See reports/step00_report.md for the summarised findings.
