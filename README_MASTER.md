@@ -28,7 +28,7 @@ If any of these is missing, STOP and tell Siva. Do not proceed from memory.
 - Never hard-code a path anywhere except `config.py` (`DATAROOT`, overridable by env var `TTCF_DATAROOT`).
 - Python: check what is installed first (`python --version`, existing `.venv`). Use a venv at `F:\TTC Fusion\.venv`. Core deps: `nuscenes-devkit`, `pyquaternion`, `numpy`, `scipy`, `matplotlib`, `pandas`, `pytest`. **Ask before installing anything heavy** (torch, ultralytics, scikit-learn, etc.).
 - Siva runs Jupyter from the F drive. Review artifacts should be PNG figures + printed summaries (notebooks optional).
-- Git: propose a commit message after each approved step; never `git push`. Provide a `.gitignore` covering `archive/`, `outputs/cache/`, `.venv/`.
+- Git: propose a commit message after each approved step. Pushing to the remote requires Siva's explicit go-ahead each time (default: don't push) — updated 2026-10-09 from the original "never push" after Siva explicitly asked for the first push (origin set to `https://github.com/sivak01/Instant-TTC.git`); see `docs/decisions.md`. Provide a `.gitignore` covering `archive/`, `outputs/cache/`, `.venv/`.
 
 ## 3. Repo layout (create as steps require; do not pre-create empty scaffolding)
 

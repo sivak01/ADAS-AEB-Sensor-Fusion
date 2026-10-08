@@ -376,3 +376,13 @@ original 17-step build order, prompted by Siva wanting a BEV
 visualization. Static per-keyframe PNGs built first (per the step
 file's own §8 STOP point); per-scene video is a separate, later
 approval gate.
+
+**2026-10-09 — process rule change — git push now allowed, per-time approval**
+Choice: `README_MASTER.md` §2's original "never `git push`" rule is
+changed to "pushing requires Siva's explicit go-ahead each time (default:
+don't push)" — Siva: "you can change the rule and do git push."
+Reason: Siva initialized the remote himself (`https://github.com/sivak01/Instant-TTC.git`)
+and explicitly asked for the first push. Not a blanket standing
+authorization to push automatically after every future commit — each
+push still needs asking, matching this project's general discipline
+around hard-to-reverse, externally-visible actions.
